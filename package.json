@@ -1,13 +1,13 @@
 {
-  "name": "github-fetcher-fullstack-v2",
+  "name": "dryver",
   "version": "1.0.0",
-  "description": "",
+  "description": "an app for showing where you can learn to drive stuff",
   "main": "index.js",
   "scripts": {
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js"
   },
-  "author": "Beth Johnson",
+  "author": "Reza Wang-Lotfi",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.23.1",
@@ -18,12 +18,14 @@
   },
   "dependencies": {
     "angular": "^1.6.3",
+    "axios": "^0.18.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.0",
+    "google-map-react": "^1.1.4",
     "jquery": "^3.1.1",
     "mongoose": "^4.8.6",
     "mysql": "^2.13.0",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react": "^15.6.2",
+    "react-dom": "^15.6.2"
   }
 }
