@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Sofia" rel="stylesheet">
+  <title>Dryver</title>
+  <style>
+    #map {
+      height: 500px;
+      width: 500px;
+      margin: 0 auto;
+    }
+    #body {
+      background-image: linear-gradient(to right, red , yellow);
+    }
+    #header {
+      text-align: center;
+      font-family: 'Sofia', cursive;
+      color: rgb(58, 58, 58)
+    }
+    #home {
+      text-align: center;
+    }
+  </style>
+</head>
+<body id='body'>
+  <h1 id='header'>Boating Schools near your location</h1>
+<!-- <div id="app"></div> -->
+<script>
+  var map;
+  var service;
+  var lat;
+  var lng;
+  
+  function initMap() {
+    navigator.geolocation.getCurrentPosition(result => {
+
+      lat = result.coords.latitude
+      lng = result.coords.longitude
+
+      initialize(lat, lng)
+    })
+  }
+
+  function initialize(lat, lng) {
+
+   var currentLocation = new google.maps.LatLng(lat, lng);
+
+   map = new google.maps.Map(
+       document.getElementById('map'), {
+         center: currentLocation,
+         zoom: 13
+       });
+
+   var request = {
+     location: currentLocation,
+     radius: '750',
+     query: ['boating school']
+   };
+
+   service = new google.maps.places.PlacesService(map);
+
+   service.textSearch(request, function(results, status) {
+     if (status === google.maps.places.PlacesServiceStatus.OK) {
+       for (var i = 0; i < results.length; i++) {
+         createMarker(results[i]);
+       }
+     }
+   });
+ }
+
+ function createMarker(place) {
+    var query = place.name.replace(/ /g, '%')
+    query = place.name.replace(/'/, '%27')
+
+    var infowindow = new google.maps.InfoWindow({
+      content: `<style>.cursor{cursor: pointer;}</style><a class='cursor'
+      href='https://google.com/search?q=${query}' target='_blank'>${place.name}</a>`
+      +`<div>${place.formatted_address}</div>`
+    });
+    
+    var marker = new google.maps.Marker({
+      map: map,
+      position: place.geometry.location
+    });
+
+    google.maps.event.addListener(marker, 'click', function() {
+      infowindow.open(map, this);
+    });
+  }
+
+</script>
+<!-- <script type="text/javascript" src="bundle.js"></script> -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=[API_KEY_HERE]&libraries=places&callback=initMap"></script>
+<div id="map"></div>
+<div id='home'><button onclick='window.location.href = "./index.html"'>Home</button></div>
+</body>
+</html>
